@@ -1,7 +1,7 @@
 ﻿import re
 
 class Log(object):
-    def __init__(self, rv_str):
+    def __init__(self, rv_str:=""):
         self.str = rv_str
 
     def reset(self, rv_str):
