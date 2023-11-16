@@ -8,6 +8,8 @@ class Log(object):
     def __init__(self, rv_str=""):
         self.str = rv_str
         self.isfinish = False
+        self.isouttolog = False
+        self.isouttocsv = False
         self.isallowagreementsub = False
         self.agreementhistorylist = [command.Command()] * 256
         self.isopenonlyhistorylist = False
@@ -16,6 +18,8 @@ class Log(object):
     def reset(self, rv_str):
         self.str = rv_str
         self.isfinish = False
+        self.isouttolog = False
+        self.isouttocsv = False
 
     def isagreement(self):
         at_match = re.search("\[0x..\]-", self.str)
@@ -41,7 +45,7 @@ class Log(object):
             at_file.truncate()
 
     def outcommandtocsv(self, rv_command, rv_config):
-        with open('out.csv', 'w', newline='') as at_file:
+        with open('out.csv', 'a', newline='') as at_file:
             at_writer = csv.writer(at_file)
             at_col_1 = rv_config.agreementnamelist[rv_command.head]
             at_col_2 = ''
@@ -53,26 +57,27 @@ class Log(object):
                 if at_head_flag:
                     at_col_2 = at_item
                     at_head_flag = False
-
-                at_col_2 += ',' + at_item
+                else:
+                    at_col_2 += ',' + at_item
 
             at_head_flag = True
             for at_item in rv_command.retlist:
                 if at_head_flag:
                     at_col_3 = at_item
                     at_head_flag = False
-
-                at_col_3 += ',' + at_item
+                else:
+                    at_col_3 += ',' + at_item
 
             at_head_flag = True
-            for at_item in rv_command.srclist:
+            for at_item in rv_command.format1list:
                 if at_head_flag:
                     at_col_4 = at_item
                     at_head_flag = False
-
-                at_col_4 += '\n' + at_item
+                else:
+                    at_col_4 += '\n' + at_item
 
             at_writer.writerow([at_col_1, at_col_2, at_col_3, at_col_4])
+            self.isouttocsv = True
 
     def outcommand(self, rv_command):
         with open('out.log', 'a') as at_file:
@@ -82,12 +87,14 @@ class Log(object):
                 if at_head_flag:
                     at_str = at_item
                     at_head_flag = False
-
-                at_str += '\n' + at_item
+                else:
+                    at_str += '\n' + at_item
 
             at_file.write(at_str + "\n")
+            self.isouttolog = True
 
 
     def outstr(self, rv_str):
         with open('out.log', 'a') as at_file:
             at_file.write(rv_str + "\n")
+            self.isouttolog = True

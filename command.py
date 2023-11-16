@@ -9,6 +9,7 @@ class Command(object):
         self.srclist = []
         self.cmdlist = []
         self.retlist = []
+        self.format1list = []
 
     def reset(self):
         self.head = 0
@@ -16,6 +17,12 @@ class Command(object):
         self.srclist = []
         self.cmdlist = []
         self.retlist = []
+        self.format1list = []
+
+    def getformat1data(self, rv_str):
+        at_match = re.search("\[0x..\]-", rv_str)
+        return rv_str[at_match.start() - 4: at_match.end() + 7]
+
     def getcmdvalue(self, rv_str):
         at_match = re.search("\[0x..\]-", rv_str)
         return rv_str[at_match.start() + 1: at_match.end() - 2]
@@ -26,9 +33,11 @@ class Command(object):
 
     def add(self, rv_str, rv_is_main):
         at_cmd_str = self.getcmdvalue(rv_str)
+        self.length += 1
         self.srclist.append(rv_str)
         self.cmdlist.append(at_cmd_str)
         self.retlist.append(self.getretvalue(rv_str))
+        self.format1list.append(self.getformat1data(rv_str))
         if rv_is_main:
             self.head = eval(at_cmd_str)
 
