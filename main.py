@@ -5,6 +5,7 @@ import command
 import log
 import sys
 import config
+from tkinter import messagebox
 
 if __name__ == '__main__':
     at_log = log.Log()
@@ -115,3 +116,4 @@ if __name__ == '__main__':
         else:
             print("end 相同匹配项不输出")
     print("is end")
+    messagebox.showinfo("提示", "已完成解析")
