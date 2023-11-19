@@ -39,13 +39,13 @@ class Log(object):
         self.agreementhistorylist[rv_agreement.head] = rv_agreement
 
     def initoutfile(self):
-        with open('out.log', 'w') as at_file:
+        with open('out.log', 'w', encoding='utf-8') as at_file:
             at_file.truncate()
         with open('out.csv', 'w') as at_file:
             at_file.truncate()
 
     def outcommandtocsv(self, rv_command, rv_config):
-        with open('out.csv', 'a', newline='') as at_file:
+        with open('out.csv', 'a', encoding='utf-8', newline='') as at_file:
             at_writer = csv.writer(at_file)
             at_col_1 = rv_config.agreementnamelist[rv_command.head]
             at_col_2 = ''
@@ -80,7 +80,7 @@ class Log(object):
             self.isouttocsv = True
 
     def outcommand(self, rv_command):
-        with open('out.log', 'a') as at_file:
+        with open('out.log', 'a', encoding='utf-8') as at_file:
             at_head_flag = True
             at_str = ''
             for at_item in rv_command.srclist:
@@ -95,6 +95,6 @@ class Log(object):
 
 
     def outstr(self, rv_str):
-        with open('out.log', 'a') as at_file:
+        with open('out.log', 'a', encoding='utf-8') as at_file:
             at_file.write(rv_str + "\n")
             self.isouttolog = True

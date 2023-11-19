@@ -12,15 +12,19 @@ if __name__ == '__main__':
     at_command = command.Command()
     at_config = config.Config()
 
-    at_log.initoutfile()
+    try:
+        at_log.initoutfile()
 
-    at_config.initonlylist(".onlyconfig.ini")
-    at_config.initrepeatlist(".repeatconfig.ini")
-    at_config.initagreementnamelist(".agreementname.ini")
+        at_config.initonlylist(".onlyconfig.ini")
+        at_config.initrepeatlist(".repeatconfig.ini")
+        at_config.initagreementnamelist(".agreementname.ini")
 
-    at_log_path = sys.argv[1]
-    at_file_log = open(at_log_path, 'r')
-    at_lines = at_file_log.readlines()
+        at_log_path = sys.argv[1]
+        at_file_log = open(at_log_path, 'r', encoding='utf-8')
+        at_lines = at_file_log.readlines()
+    except UnicodeDecodeError:
+        messagebox.showinfo("提示:解析出错", "需要解析的LOG文件编码为UTF-8，配置文件的编码为GBK")
+        exit()
 
     for at_line in at_lines:
         at_log.reset(at_line.rstrip("\n"))

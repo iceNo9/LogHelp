@@ -8,7 +8,7 @@ class Config(object):
     def initonlylist(self, rv_path):
         at_file_size = os.path.getsize(rv_path)
         if at_file_size:
-            at_file_config = open(rv_path, 'r')
+            at_file_config = open(rv_path, 'r', encoding='utf-8')
             at_lines = at_file_config.readlines()
             for at_line in at_lines:
                 self.onlylist.append(at_line.rstrip("\n"))
@@ -16,7 +16,7 @@ class Config(object):
     def initrepeatlist(self, rv_path):
         at_file_size = os.path.getsize(rv_path)
         if at_file_size:
-            at_file_config = open(rv_path, 'r')
+            at_file_config = open(rv_path, 'r', encoding='utf-8')
             at_lines = at_file_config.readlines()
             for at_line in at_lines:
                 self.repeatlist.append(at_line.rstrip("\n"))
@@ -24,7 +24,7 @@ class Config(object):
     def initagreementnamelist(self, rv_path):
         at_file_size = os.path.getsize(rv_path)
         if at_file_size:
-            at_file_config = open(rv_path, 'r')
+            at_file_config = open(rv_path, 'r', encoding='GBK')
             at_lines = at_file_config.readlines()
             for at_line in at_lines:
                 at_str = at_line.rstrip("\n")
