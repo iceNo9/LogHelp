@@ -13,6 +13,7 @@ if __name__ == '__main__':
     at_config = config.Config()
 
     try:
+        at_err_flag = False
         at_log.initoutfile()
 
         at_config.initonlylist(".onlyconfig.ini")
@@ -24,7 +25,13 @@ if __name__ == '__main__':
         at_lines = at_file_log.readlines()
     except UnicodeDecodeError:
         messagebox.showinfo("提示:解析出错", "需要解析的LOG文件编码为UTF-8，配置文件的编码为GBK")
-        exit()
+        at_err_flag = True
+    except PermissionError:
+        messagebox.showinfo("提示:解析出错", "请确认out.csv文件未被占用")
+        at_err_flag = True
+    finally:
+        if at_err_flag:
+            sys.exit()
 
     for at_line in at_lines:
         at_log.reset(at_line.rstrip("\n"))
